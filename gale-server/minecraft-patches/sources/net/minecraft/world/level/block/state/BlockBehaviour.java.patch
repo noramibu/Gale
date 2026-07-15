@@ -36,10 +36,7 @@
 +            // Gale start - Pre-compute - BlockBehaviour.hasBlockEntity()
 +            this.gale$precompute_hasBlockEntity = this.getBlock() instanceof EntityBlock;
 +            // Gale end - Pre-compute - BlockBehaviour.hasBlockEntity()
-+            // Paper configuration is initialized after block bootstrap.
-+            if (io.papermc.paper.configuration.GlobalConfiguration.get() != null) {
-+                this.gale$eventDriven_isDestroyable_update(); // Gale - Event-driven - BlockBehaviour.isDestroyable()
-+            }
++            this.gale$eventDriven_isDestroyable_update(); // Gale - Event-driven - BlockBehaviour.isDestroyable()
 +            this.gale$eventDriven_pistonPushReaction_update(); // Gale - Event-driven - BlockBehaviour.getPistonPushReaction()
              // Paper start - rewrite chunk system
              this.isConditionallyFullOpaque = this.canOcclude & this.useShapeForLightOcclusion;
@@ -72,6 +69,8 @@
 +        }
 +
 +        private void gale$eventDriven_isDestroyable_update() {
++            // Paper configuration is initialized after block bootstrap.
++            if (io.papermc.paper.configuration.GlobalConfiguration.get() == null) return;
 +            boolean newValue = this.getBlock().isDestroyable();
 +            if (this.gale$eventDriven_isDestroyable != newValue) {
 +                this.gale$eventDriven_isDestroyable = newValue;
