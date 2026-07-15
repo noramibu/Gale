@@ -29,14 +29,17 @@
  
          private static void initCaches(final VoxelShape shape, final boolean neighbours) {
              ((ca.spottedleaf.moonrise.patches.collisions.shape.CollisionVoxelShape)shape).moonrise$isFullBlock();
-@@ -623,6 +_,11 @@
+@@ -623,6 +_,14 @@
  
              this.propagatesSkylightDown = this.owner.propagatesSkylightDown(this.asState());
              this.lightDampening = this.owner.getLightDampening(this.asState());
 +            // Gale start - Pre-compute - BlockBehaviour.hasBlockEntity()
 +            this.gale$precompute_hasBlockEntity = this.getBlock() instanceof EntityBlock;
 +            // Gale end - Pre-compute - BlockBehaviour.hasBlockEntity()
-+            this.gale$eventDriven_isDestroyable_update(); // Gale - Event-driven - BlockBehaviour.isDestroyable()
++            // Paper configuration is initialized after block bootstrap.
++            if (io.papermc.paper.configuration.GlobalConfiguration.get() != null) {
++                this.gale$eventDriven_isDestroyable_update(); // Gale - Event-driven - BlockBehaviour.isDestroyable()
++            }
 +            this.gale$eventDriven_pistonPushReaction_update(); // Gale - Event-driven - BlockBehaviour.getPistonPushReaction()
              // Paper start - rewrite chunk system
              this.isConditionallyFullOpaque = this.canOcclude & this.useShapeForLightOcclusion;
